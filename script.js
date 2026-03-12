@@ -1,63 +1,103 @@
-let viewer;
+// Rev 1 
 
-window.addEventListener("load", function(){
+let camera;
+let scene;
+let renderer;
+let controls;
 
-viewer = pannellum.viewer("panorama",{
+init();
 
-type:"equirectangular",
-panorama: CONFIG.panoramaImage,
-autoLoad:true,
-showControls:false
+function init(){
 
-});
+scene = new THREE.Scene();
 
-});
+camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth / window.innerHeight,
+1,
+1100
+);
+
+renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+document.getElementById("viewer").appendChild(renderer.domElement);
 
 
-document.getElementById("arBtn").addEventListener("click", function(){
+/* panorama sphere */
 
-if(!viewer) return;
+const geometry = new THREE.SphereGeometry(500,60,40);
+geometry.scale(-1,1,1);
+
+const texture = new THREE.TextureLoader().load(CONFIG.panoramaImage);
+
+const material = new THREE.MeshBasicMaterial({map:texture});
+
+const mesh = new THREE.Mesh(geometry,material);
+
+scene.add(mesh);
+
+animate();
+
+}
 
 
-/* iOS / modern browsers permission */
+/* render loop */
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+if(controls){
+controls.update();
+}
+
+renderer.render(scene,camera);
+
+}
+
+
+/* =====================
+   AR BUTTON
+===================== */
+
+document.getElementById("arBtn").addEventListener("click", async function(){
+
+/* fullscreen */
+
+document.body.requestFullscreen();
+
+
+/* iPhone permission */
 
 if(typeof DeviceOrientationEvent !== "undefined" &&
 typeof DeviceOrientationEvent.requestPermission === "function"){
 
-DeviceOrientationEvent.requestPermission()
-.then(function(response){
+try{
+
+const response = await DeviceOrientationEvent.requestPermission();
 
 if(response === "granted"){
-
-startAR();
-
-}else{
-
-alert("Motion permission denied");
-
+enableGyro();
 }
 
-});
+}catch(e){
+console.log(e);
+}
 
 }else{
 
-startAR();
+enableGyro();
 
 }
 
 });
 
 
-function startAR(){
+function enableGyro(){
 
-viewer.startOrientation();
-
-/* fullscreen */
-
-const pano = document.getElementById("panorama");
-
-if(pano.requestFullscreen){
-pano.requestFullscreen();
-}
+controls = new THREE.DeviceOrientationControls(camera);
+controls.connect();
+controls.update();
 
 }
