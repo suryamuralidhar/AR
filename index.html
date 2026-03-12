@@ -2,25 +2,21 @@
 <html>
 
 <head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
-
-<title>360 Viewer</title>
+<title>AR 360 Viewer</title>
 
 <style>
 
-html,body{
+body{
 margin:0;
-height:100%;
+overflow:hidden;
 background:black;
 }
 
-#panorama{
-width:100%;
+#viewer{
+width:100vw;
 height:100vh;
 }
 
@@ -31,8 +27,8 @@ left:50%;
 transform:translateX(-50%);
 padding:14px 30px;
 font-size:18px;
-border-radius:30px;
 border:none;
+border-radius:30px;
 background:white;
 cursor:pointer;
 z-index:10;
@@ -44,11 +40,12 @@ z-index:10;
 
 <body>
 
-<div id="panorama"></div>
+<div id="viewer"></div>
 
 <button id="arBtn">ENTER AR</button>
 
-<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/DeviceOrientationControls.js"></script>
 
 <script src="config.js"></script>
 <script src="script.js"></script>
