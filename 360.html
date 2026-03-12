@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+
+<title>360 Viewer</title>
+
+<style>
+
+html,body{
+margin:0;
+height:100%;
+background:black;
+}
+
+#panorama{
+width:100%;
+height:100vh;
+}
+
+#arBtn{
+position:absolute;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+padding:14px 30px;
+font-size:18px;
+border-radius:30px;
+border:none;
+background:white;
+cursor:pointer;
+z-index:10;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="panorama"></div>
+
+<button id="arBtn">ENTER AR</button>
+
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
